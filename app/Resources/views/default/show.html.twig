@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h2 class="page-header">Comments by {{name}}</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Text</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for comment in comments %}
+          <tr>
+            <td>{{comment.text}}</td>
+            <td>{{comment.date|date('d.m.Y H:i:s')}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
