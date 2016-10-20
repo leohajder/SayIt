@@ -49,8 +49,7 @@ class DefaultController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $userRepository = $this->getDoctrine()->getRepository('AppBundle:User');
-        $user = $userRepository->findOneByName($userName);
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneByName($userName);
 
         if(!$user) //ONLY if there is no user with the posted name, insert the new user
         {
@@ -83,7 +82,7 @@ class DefaultController extends Controller
       $user = $this->getDoctrine()->getRepository('AppBundle:User')->findOneByName($name);
       if(!$user) $this->addFlash('error', 'No user with that name.');
       $comments = $this->getDoctrine()->getRepository('AppBundle:Comment')->findBy(array('user'=>$user), array('date'=>'DESC'));
-      if(!$comments) $this->addFlash('info', 'No comments by this user.');
+      if($user && !$comments) $this->addFlash('info', 'No comments by this user.');
       return $this->render('default/show.html.twig', array('name' => $name, 'comments'=>$comments));
     }
 }
